@@ -1,0 +1,173 @@
+#include <SD.h>
+#include "DHT.h"
+ #define DHTPIN 2
+ #define DHTPIN2 3
+ #define DHTPIN3 5
+ #define DHTPIN4 6
+ #define DHTPIN5 7
+ #define DHTPIN6 8
+ #define DHTPIN7 9
+   
+ #define DHTTYPE DHT22 
+ #define DHTTYPE2 DHT22 
+ #define DHTTYPE3 DHT22  
+ #define DHTTYPE4 DHT22
+ #define DHTTYPE5 DHT22
+ #define DHTTYPE6 DHT22
+ #define DHTTYPE7 DHT22
+ 
+ DHT dht(DHTPIN, DHTTYPE);
+ DHT dht2(DHTPIN2, DHTTYPE2);
+ DHT dht3(DHTPIN3, DHTTYPE3);
+ DHT dht4(DHTPIN4, DHTTYPE4);
+ DHT dht5(DHTPIN5, DHTTYPE5);
+ DHT dht6(DHTPIN6, DHTTYPE6);
+ DHT dht7 (DHTPIN7, DHTTYPE7);
+ 
+File myFile;
+void setup()
+{
+  Serial.begin(9600);
+  Serial.print("Iniciando SD ...");
+
+   dht.begin();
+   dht2.begin();
+   dht3.begin();
+   dht4.begin();
+   dht5.begin();
+   dht6.begin();
+   dht7.begin();
+   
+  if (!SD.begin(4)) {
+    Serial.println("No se pudo inicializar");
+    return;
+  }
+  Serial.println("inicializacion exitosa");
+
+  
+}
+
+void loop()
+{
+  myFile = SD.open("sd.txt", FILE_WRITE);//abrimos  el archivo
+  float h = dht.readHumidity(); //Leemos la Humedad
+  float t = dht.readTemperature();//Leemos la temperatura en grados Celsius
+  
+  float h2=dht2. readHumidity();
+  float t2 =dht2.readTemperature();
+  
+  float h3=dht3. readHumidity();
+  float t3 =dht3.readTemperature();
+  
+  float h4=dht4. readHumidity();
+  float t4 =dht4.readTemperature();
+
+  float h5=dht5. readHumidity();
+  float t5 =dht5.readTemperature();
+
+  float h6=dht6. readHumidity();
+  float t6 =dht6.readTemperature();
+
+  float h7=dht7. readHumidity();
+  float t7=dht7. readTemperature();
+  
+  if (myFile) { 
+        Serial.print("Escribiendo SD: ");
+  
+        myFile.print("Tiempo(ms)=");
+        myFile.print(millis());
+        
+        myFile.print(", temp 1=");
+        myFile.print(t);
+        myFile.print(", HR =");
+        myFile.print(h);
+
+         myFile.print(", temp 2=");
+        myFile.print(t2);
+         myFile.print(", HR 2 =");
+        myFile.print(h2);
+        
+        myFile.print(", temp 3=");
+        myFile.print(t3);
+         myFile.print(", HR 3 =");
+        myFile.print(h3);
+
+         myFile.print(", temp 4=");
+        myFile.print(t4);
+         myFile.print(", HR 4 =");
+        myFile.print(h4);
+
+        myFile.print(", temp 5=");
+        myFile.print(t5);
+         myFile.print(", HR 5 =");
+        myFile.print(h5);
+
+        myFile.print(", temp 6=");
+        myFile.print(t6);
+         myFile.print(", HR 6 =");
+        myFile.print(h6);
+        
+        myFile.print(", temp 7=");
+        myFile.print(t7);
+        myFile.print(", HR 7 =");
+        myFile.println(h7);
+        
+        myFile.close(); //cerramos el archivo
+        
+        Serial.print("Tiempo(ms)=");
+        Serial.print(millis());
+        
+       
+  Serial.print(", Humedad 1=");
+  Serial.print(h);
+  Serial.print(" %t");
+  Serial.print(", Temperatura 1= ");
+  Serial.print(t);
+  Serial.print(" *C ");   
+  
+  Serial.print(", Humedad 2=");
+  Serial.print(h2);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 2=");
+  Serial.print(t2);
+  Serial.print(" °C ");      
+
+  Serial.print(", Humedad 3=");
+  Serial.print(h3);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 3=");
+  Serial.print(t3);
+  Serial.print(" °C "); 
+  
+  Serial.print(", Humedad 4=");
+  Serial.print(h4);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 4=");
+  Serial.print(t4);
+  Serial.print(" °C "); 
+
+  Serial.print(", Humedad 5=");
+  Serial.print(h5);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 5=");
+  Serial.print(t5);
+  Serial.print(" °C "); 
+
+  Serial.print(", Humedad 6=");
+  Serial.print(h6);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 6=");
+  Serial.print(t6);
+  Serial.print(" °C "); 
+/*
+  Serial.print(", Humedad 7=");
+  Serial.print(h7);
+  Serial.print(" %HR");
+  Serial.print(", Temperatura 7=");
+  Serial.print(t7);
+  Serial.println(" °C ");*/  
+  } else {
+    Serial.println("Error al abrir el archivo");
+  }
+  delay(2000);
+}
